@@ -3,6 +3,8 @@
 # of functional programming concepts (eg. functions as parameters to other functions,
 # closures etc. )
 
+#Consider the following example of the decorator function, exception_catcher
+
 def exception_catcher(func):
     def inner(*args): #1         
             try:
