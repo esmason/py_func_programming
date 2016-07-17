@@ -64,3 +64,56 @@ filereader('nonexistent_file.txt')
 
 
 
+# Now lets look at a (perhaps) more interesting example
+# the following is a simple (albeit 'insecure', see http://goo.gl/C2wfkH ) bank account class
+# let's say we want the user to enter a password every time they access their account
+# we can use the decorator function enter_password to concisely accomplish this.
+# In this way every call to withdraw, deposit and transfer is wrapped in a password request.
+
+class BankAccount(object):
+
+    def __init__(self, name, password, balance = 100):
+        self.name = name
+        self.password = password
+        self.balance = balance
+
+    def enter_password(func):
+        def inner(self, *args):
+            password_attempt = input("Enter Password: " )
+            if password_attempt == self.password:
+                print("password accepted")
+                return func(self, *args)
+            else:
+                print("incorrect password, request denied")
+        return inner
+
+    @enter_password
+    def withdraw(self, amount):
+        if self.balance - amount >= 0:
+            self.balance -=amount
+            print(str(amount) + " withdrawn." )
+        else:
+            print("denied, insufficient funds. " )
+        print("Current balance is: " + str(self.balance) )
+        
+    @enter_password
+    def deposit(self, amount):
+        self.balance += amount
+        print(str(amount) + " deposited." )
+        print("Current balance is: " + str(self.balance) )
+
+         
+    @enter_password
+    def transfer(self, amount, other_account):
+        if self.balance - amount >= 0:
+                  self.balance -= amount
+                  print(str(amount) + " transfered to " + other_account )
+        else:
+            print("denied, insufficient funds")
+        print("Current balance is: " + str(self.balance) )
+
+
+        
+
+    
+
