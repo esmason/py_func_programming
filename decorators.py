@@ -29,9 +29,20 @@ wrapped_divide(2, 0)
 # returns a wrapped function. This wrapped function will attempt to execute func and if 
 # an exception is raised, it will log the exception in the console.
 
+# so what's going on with exception_catcher ?
+# exception_catcher returns a callable, specifically the nested function inner.
+# if we look at the line marked #3, we can see that wrapped_divide now refers
+# to a callable that can be called multiple times with different inputs.
+
+# Note that use of: 
+# @func_decorator 
+# def func(a,b,c...) 
+# as seen on the line marked #4, is 'equivalent' to:
+# wrapped_func = func_decorator(func) as seen at #3
+
 
 @exception_catcher      # divider = exception_catcher(divider) 
-def divider(n, d):      # would acheive the same effect as @ 
+def divider(n, d):      # would acheive the same effect as @exception_catcher 
     quotient = n/d
     return quotient
 
@@ -45,14 +56,7 @@ filereader('nonexistent_file.txt')
 
 
 
-# so what's going on with exception_catcher ?
-# exception_catcher returns a callable, specifically the nested function inner.
-# if we look at the line marked #3, we can see that the wrapped_divide now refers
-# to a callable that can be called multiple times.
-# Note that use of @func_decorator above def func(a,b,c...) -- as seen on the line
-# marked #4 -- is 'equivalent' to wrapped_func = func_decorator(func)
  
-
 # The callable returned by exception_catcher will have different properties, depending
 # on what func was passed to exception_catcher. Notably, the variable func (#2) may be
 # different for different calls to exception_catcher(func). You may be wondering
@@ -64,7 +68,7 @@ filereader('nonexistent_file.txt')
 
 # Lastly you may be wondering what the *args syntax on the lines marked #1 and #2 refers to.
 # I won't get into the details here but suffice it to say, the use of * allows inner and func
-# to accept arbitrary numbers of positional arguments. To find out more about the * operator
+# to accept an arbitrary number of positional arguments. To find out more about the * operator
 # check out:    https://docs.python.org/3/tutorial/controlflow.html#unpacking-argument-lists
 # and   http://stackoverflow.com/questions/2921847/what-does-the-star-operator-mean-in-python/2921893#2921893
                           
@@ -72,8 +76,8 @@ filereader('nonexistent_file.txt')
 
 
 # Now lets look at a (perhaps) more interesting example
-# the following is a simple (albeit 'insecure', see http://goo.gl/C2wfkH ) bank account class
-# let's say we want the user to enter a password every time they access their account
+# the following is a simple (albeit 'insecure', see http://goo.gl/C2wfkH ) bank account class.
+# Let's say we want the user to enter a password every time they access their account
 # we can use the decorator function enter_password to concisely accomplish this.
 # In this way every call to withdraw, deposit and transfer is wrapped in a password request.
 
