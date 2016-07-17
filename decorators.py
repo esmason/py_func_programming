@@ -1,5 +1,5 @@
 # Writing this tutorial to help me learn about decorators. A few simple examples 
-# of how they can be used follows. This tutorial assumes a basic understanding
+# of how they can be used follow. This tutorial assumes a basic understanding
 # of functional programming concepts (eg. functions as parameters to other functions,
 # closures etc. )
 
