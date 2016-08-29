@@ -1,6 +1,6 @@
 # Writing this tutorial to help me learn about decorators. A few simple examples 
 # of how they can be used follow. This tutorial assumes a basic understanding
-# of functional programming concepts (eg. functions as parameters to other functions,
+# of functional programming concepts (eg. functions as arguments to other functions,
 # closures etc. )
 
 #Consider the following example of the decorator function, exception_catcher
